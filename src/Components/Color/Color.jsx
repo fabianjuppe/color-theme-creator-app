@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./Color.css";
 import ColorForm from "../ColorForm/ColorForm";
 import CopyToClipboard from "../CopyToClipboard/CopyToClipboard";
+import ContrastCheck from "../ContrastCheck/ContrastCheck";
 
 export default function Color({ color, onDeleteColor, onEditColor }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -20,6 +21,7 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
             <p style={{ color: color.contrastText }}>
                 contrast: {color.contrastText.toUpperCase()}
             </p>
+            <ContrastCheck color={color.hex} contrast={color.contrastText} />
             {showEditMode && (
                 <ColorForm
                     onSubmitColor={handleEditColor}

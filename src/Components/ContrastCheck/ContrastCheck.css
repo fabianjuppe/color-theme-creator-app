@@ -1,0 +1,15 @@
+.contrast-score {
+    width: fit-content;
+}
+
+.contrast-score--Yup {
+    background-color: #50ca55;
+}
+
+.contrast-score--Kinda {
+    background-color: #eebe30;
+}
+
+.contrast-score--Nope {
+    background-color: #e94c31;
+}
