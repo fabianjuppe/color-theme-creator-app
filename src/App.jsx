@@ -16,16 +16,25 @@ function App() {
         setColors(colors.filter((color) => color !== colorToDelete));
     }
 
+    function handleEditColor(editedColor) {
+        setColors(
+            colors.map((color) =>
+                color.id === editedColor.id ? editedColor : color,
+            ),
+        );
+    }
+
     return (
         <>
             <h1>Theme Creator</h1>
-            <ColorForm onAddColor={handleAddColor} />
+            <ColorForm onSubmitColor={handleAddColor} />
             <ul>
                 {colors.map((color) => (
                     <li key={color.id}>
                         <Color
                             color={color}
                             onDeleteColor={handleDeleteColor}
+                            onEditColor={handleEditColor}
                         />
                     </li>
                 ))}

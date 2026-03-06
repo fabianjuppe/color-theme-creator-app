@@ -1,8 +1,15 @@
 import { useState } from "react";
 import "./Color.css";
+import ColorForm from "../ColorForm/ColorForm";
 
-export default function Color({ color, onDeleteColor }) {
+export default function Color({ color, onDeleteColor, onEditColor }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showEditMode, setShowEditMode] = useState(false);
+
+    function handleEditColor(editedColor) {
+        onEditColor(editedColor);
+        setShowEditMode(false);
+    }
 
     return (
         <div className="color-card" style={{ backgroundColor: color.hex }}>
@@ -11,25 +18,43 @@ export default function Color({ color, onDeleteColor }) {
             <p style={{ color: color.contrastText }}>
                 contrast: {color.contrastText.toUpperCase()}
             </p>
+            {showEditMode && (
+                <ColorForm
+                    onSubmitColor={handleEditColor}
+                    initialColor={color}
+                />
+            )}
             {showConfirmation && (
                 <>
                     <p className="color-card-highlight">Really delete?</p>
-                    <button
-                        onClick={() => setShowConfirmation(!showConfirmation)}
-                    >
+                    <button onClick={() => setShowConfirmation(false)}>
                         CANCEL
                     </button>
                 </>
             )}
-            <button
-                onClick={
-                    showConfirmation
-                        ? () => onDeleteColor?.(color)
-                        : () => setShowConfirmation(!showConfirmation)
-                }
-            >
-                DELETE
-            </button>
+            {showEditMode && (
+                <>
+                    <button onClick={() => setShowEditMode(false)}>
+                        CANCEL
+                    </button>
+                </>
+            )}
+            {!showEditMode && (
+                <button
+                    onClick={
+                        showConfirmation
+                            ? () => onDeleteColor?.(color)
+                            : () => setShowConfirmation(true)
+                    }
+                >
+                    DELETE
+                </button>
+            )}
+            {!showConfirmation && !showEditMode && (
+                <button onClick={() => setShowEditMode(!showEditMode)}>
+                    EDIT
+                </button>
+            )}
         </div>
     );
 }
