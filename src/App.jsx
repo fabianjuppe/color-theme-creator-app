@@ -12,6 +12,10 @@ function App() {
         console.log(newColor);
     }
 
+    function handleDeleteColor(colorToDelete) {
+        setColors(colors.filter((color) => color !== colorToDelete));
+    }
+
     return (
         <>
             <h1>Theme Creator</h1>
@@ -19,10 +23,14 @@ function App() {
             <ul>
                 {colors.map((color) => (
                     <li key={color.id}>
-                        <Color color={color} />
+                        <Color
+                            color={color}
+                            onDeleteColor={handleDeleteColor}
+                        />
                     </li>
                 ))}
             </ul>
+            {colors.length === 0 && <p>No colors.. start by adding one!</p>}
         </>
     );
 }
