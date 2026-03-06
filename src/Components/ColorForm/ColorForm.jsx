@@ -2,14 +2,14 @@ import { nanoid } from "nanoid";
 import ColorInput from "../ColorInput/ColorInput";
 import "./ColorForm.css";
 
-export default function ColorForm({ onAddColor }) {
+export default function ColorForm({ onSubmitColor, initialColor }) {
     function handleSubmit(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData);
 
-        onAddColor({
-            id: nanoid(),
+        onSubmitColor({
+            id: initialColor?.id || nanoid(),
             role: data.role,
             hex: data.hex.toUpperCase(),
             contrastText: data.contrastText.toUpperCase(),
@@ -19,20 +19,32 @@ export default function ColorForm({ onAddColor }) {
     }
 
     return (
-        <form className="color-form" onSubmit={handleSubmit}>
+        <form
+            className="color-form"
+            onSubmit={handleSubmit}
+            style={{
+                color: initialColor ? initialColor.contrastText : "#000000",
+            }}
+        >
             <label htmlFor="role">Role</label>
             <input
                 id="role"
                 type="text"
                 name="role"
                 placeholder="some color"
+                defaultValue={initialColor?.role || ""}
                 required
             />
             <label htmlFor="hex">Hex</label>
-            <ColorInput id="hex" hex="#123456" />
+            <ColorInput id="hex" hex={initialColor?.hex || "#123456"} />
             <label htmlFor="contrastText">Contrast Text</label>
-            <ColorInput id="contrastText" hex="#ffffff" />
-            <button type="submit">ADD COLOR</button>
+            <ColorInput
+                id="contrastText"
+                hex={initialColor?.contrastText || "#ffffff"}
+            />
+            <button type="submit">
+                {initialColor ? "UPDATE COLOR" : "ADD COLOR"}
+            </button>
         </form>
     );
 }
