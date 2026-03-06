@@ -11,8 +11,8 @@ export default function ColorForm({ onAddColor }) {
         onAddColor({
             id: nanoid(),
             role: data.role,
-            hex: data.hex,
-            contrastText: data.contrastText,
+            hex: data.hex.toUpperCase(),
+            contrastText: data.contrastText.toUpperCase(),
         });
 
         event.target.reset();
