@@ -1,47 +1,131 @@
 import { initialColors } from "./lib/colors";
-import Color from "./Components/Color/Color";
-import ColorForm from "./Components/ColorForm/ColorForm";
+import { initialThemes } from "./lib/themes";
 import "./App.css";
 import useLocalStorageState from "use-local-storage-state";
+import Theme from "./Components/Theme/Theme";
+import { nanoid } from "nanoid";
+import { useState } from "react";
 
 function App() {
-        const [colors, setColors] = useLocalStorageState("colors", {
-        defaultValue: initialColors,
+    const [themes, setThemes] = useLocalStorageState("themes", {
+        defaultValue: initialThemes.map((theme) =>
+            theme.id === "t1"
+                ? { ...theme, colors: initialColors, default: true }
+                : { ...theme, colors: [], default: false },
+        ),
     });
+    const [currentThemeId, setCurrentThemeId] = useLocalStorageState(
+        "currentThemeId",
+        { defaultValue: initialThemes[0].id },
+    );
 
-    function handleAddColor(newColor) {
-        setColors([newColor, ...colors]);
-        console.log(newColor);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showEditMode, setShowEditMode] = useState(false);
+
+    const currentTheme = themes.find((theme) => theme.id === currentThemeId);
+
+    function handleAddTheme() {
+        const newTheme = {
+            id: nanoid(),
+            name: "NEW THEME",
+            colors: [],
+            default: false,
+        };
+
+        setThemes([...themes, newTheme]);
+        setCurrentThemeId(newTheme.id);
     }
 
-    function handleDeleteColor(colorToDelete) {
-        setColors(colors.filter((color) => color !== colorToDelete));
+    function handleDeleteTheme() {
+        setCurrentThemeId(themes[0].id);
+        setThemes(themes.filter((theme) => theme !== currentTheme));
+        setShowConfirmation(false);
     }
 
-    function handleEditColor(editedColor) {
-        setColors(
-            colors.map((color) =>
-                color.id === editedColor.id ? editedColor : color,
+    function handleEditTheme(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData);
+
+        setThemes(
+            themes.map((theme) =>
+                theme.id === currentThemeId
+                    ? { ...theme, name: data.themeName }
+                    : theme,
             ),
         );
+
+        setShowEditMode(false);
     }
 
     return (
         <>
             <h1>Theme Creator</h1>
-            <ColorForm onSubmitColor={handleAddColor} />
-            <ul>
-                {colors.map((color) => (
-                    <li key={color.id}>
-                        <Color
-                            color={color}
-                            onDeleteColor={handleDeleteColor}
-                            onEditColor={handleEditColor}
-                        />
-                    </li>
-                ))}
-            </ul>
-            {colors.length === 0 && <p>No colors.. start by adding one!</p>}
+            {showEditMode ? (
+                <>
+                    <form onSubmit={handleEditTheme}>
+                        <input
+                            id="themeName"
+                            type="text"
+                            name="themeName"
+                            defaultValue={currentTheme.name}
+                        ></input>
+                        <button type="submit">UPDATE</button>
+                        <button onClick={() => setShowEditMode(false)}>
+                            CANCEL
+                        </button>
+                    </form>
+                </>
+            ) : showConfirmation ? (
+                <>
+                    <button
+                        onClick={handleDeleteTheme}
+                        disabled={currentTheme.default}
+                    >
+                        DELETE
+                    </button>
+                    <button
+                        onClick={() => setShowConfirmation(false)}
+                        disabled={currentTheme.default}
+                    >
+                        CANCEL
+                    </button>
+                </>
+            ) : (
+                <>
+                    <select
+                        value={currentTheme.id}
+                        onChange={(event) =>
+                            setCurrentThemeId(event.target.value)
+                        }
+                    >
+                        {themes.map((theme) => (
+                            <option key={theme.id} value={theme.id}>
+                                {theme.name}
+                            </option>
+                        ))}
+                    </select>
+                    <button onClick={handleAddTheme}>ADD</button>
+                    <button
+                        onClick={() => setShowEditMode(true)}
+                        disabled={currentTheme.default}
+                    >
+                        EDIT
+                    </button>
+                    <button
+                        onClick={() => setShowConfirmation(true)}
+                        disabled={currentTheme.default}
+                    >
+                        DELETE
+                    </button>
+                </>
+            )}
+
+            <Theme
+                currentTheme={currentTheme}
+                themes={themes}
+                setThemes={setThemes}
+            />
         </>
     );
 }
