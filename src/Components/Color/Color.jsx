@@ -3,6 +3,7 @@ import "./Color.css";
 import ColorForm from "../ColorForm/ColorForm";
 import CopyToClipboard from "../CopyToClipboard/CopyToClipboard";
 import ContrastCheck from "../ContrastCheck/ContrastCheck";
+import { Pencil, Trash2 } from "lucide-react";
 
 export default function Color({ color, onDeleteColor, onEditColor }) {
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -15,49 +16,59 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
 
     return (
         <div className="color-card" style={{ backgroundColor: color.hex }}>
-            <h2 className="color-card-highlight">{color.hex.toUpperCase()}</h2>
-            <CopyToClipboard hex={color.hex} />
-            <p style={{ color: color.contrastText }}>{color.role}</p>
-            <p style={{ color: color.contrastText }}>
-                contrast: {color.contrastText.toUpperCase()}
-            </p>
-            <ContrastCheck color={color.hex} contrast={color.contrastText} />
-            {showEditMode && (
+            {showEditMode ? (
                 <ColorForm
                     onSubmitColor={handleEditColor}
+                    setShowEditMode={setShowEditMode}
                     initialColor={color}
                 />
-            )}
-            {showConfirmation && (
+            ) : showConfirmation ? (
                 <>
-                    <p className="color-card-highlight">Really delete?</p>
-                    <button onClick={() => setShowConfirmation(false)}>
-                        CANCEL
+                    <button
+                        className="color-card__button color-card__button--delete"
+                        onClick={() => onDeleteColor?.(color)}
+                    >
+                        Delete
+                    </button>
+                    <button
+                        className="color-card__button color-card__button--cancel"
+                        onClick={() => setShowConfirmation(false)}
+                    >
+                        Cancel
                     </button>
                 </>
-            )}
-            {showEditMode && (
+            ) : (
                 <>
-                    <button onClick={() => setShowEditMode(false)}>
-                        CANCEL
-                    </button>
+                    <CopyToClipboard
+                        color={color.hex}
+                        contrast={color.contrastText}
+                    />
+                    <p style={{ color: color.contrastText }}>{color.role}</p>
+                    <p style={{ color: color.contrastText }}>
+                        {color.contrastText.toUpperCase()}
+                    </p>
+                    <ContrastCheck
+                        color={color.hex}
+                        contrast={color.contrastText}
+                    />
                 </>
             )}
-            {!showEditMode && (
-                <button
-                    onClick={
-                        showConfirmation
-                            ? () => onDeleteColor?.(color)
-                            : () => setShowConfirmation(true)
-                    }
-                >
-                    DELETE
-                </button>
-            )}
+
             {!showConfirmation && !showEditMode && (
-                <button onClick={() => setShowEditMode(!showEditMode)}>
-                    EDIT
-                </button>
+                <>
+                    <button
+                        className="color-card__icon color-card__icon--delete"
+                        onClick={() => setShowConfirmation(true)}
+                    >
+                        <Trash2 size={25} color={color.contrastText} />
+                    </button>
+                    <button
+                        className="color-card__icon color-card__icon--edit"
+                        onClick={() => setShowEditMode(!showEditMode)}
+                    >
+                        <Pencil size={25} color={color.contrastText} />
+                    </button>
+                </>
             )}
         </div>
     );

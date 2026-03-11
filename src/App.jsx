@@ -65,35 +65,44 @@ function App() {
                 <>
                     <form onSubmit={handleEditTheme}>
                         <input
+                            className="app__input"
                             id="themeName"
                             type="text"
                             name="themeName"
                             defaultValue={currentTheme.name}
                         ></input>
-                        <button type="submit">UPDATE</button>
-                        <button onClick={() => setShowEditMode(false)}>
-                            CANCEL
+                        <button className="app__button" type="submit">
+                            Update
+                        </button>
+                        <button
+                            className="app__button theme__button--cancel"
+                            onClick={() => setShowEditMode(false)}
+                        >
+                            Cancel
                         </button>
                     </form>
                 </>
             ) : showConfirmation ? (
                 <>
                     <button
+                        className="app__button"
                         onClick={handleDeleteTheme}
                         disabled={currentTheme.default}
                     >
-                        DELETE
+                        Delete
                     </button>
                     <button
+                        className="app__button theme__button--cancel"
                         onClick={() => setShowConfirmation(false)}
                         disabled={currentTheme.default}
                     >
-                        CANCEL
+                        Cancel
                     </button>
                 </>
             ) : (
                 <>
                     <select
+                        className="app__select"
                         value={currentTheme.id}
                         onChange={(event) =>
                             setCurrentThemeId(event.target.value)
@@ -105,19 +114,25 @@ function App() {
                             </option>
                         ))}
                     </select>
-                    <button onClick={handleAddTheme}>ADD</button>
-                    <button
-                        onClick={() => setShowEditMode(true)}
-                        disabled={currentTheme.default}
-                    >
-                        EDIT
+                    <button className="app__button" onClick={handleAddTheme}>
+                        Add
                     </button>
-                    <button
-                        onClick={() => setShowConfirmation(true)}
-                        disabled={currentTheme.default}
-                    >
-                        DELETE
-                    </button>
+                    {!currentTheme.default && (
+                        <>
+                            <button
+                                className="app__button"
+                                onClick={() => setShowEditMode(true)}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                className="app__button"
+                                onClick={() => setShowConfirmation(true)}
+                            >
+                                Delete
+                            </button>
+                        </>
+                    )}
                 </>
             )}
 

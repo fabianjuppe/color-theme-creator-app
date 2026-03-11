@@ -46,7 +46,7 @@ export default function Theme({ currentTheme, themes, setThemes }) {
     return (
         <>
             <ColorForm onSubmitColor={handleAddColor} />
-            <ul>
+            <ul className="theme__list">
                 {currentTheme.colors.map((color) => (
                     <li key={color.id}>
                         <Color
@@ -58,7 +58,7 @@ export default function Theme({ currentTheme, themes, setThemes }) {
                 ))}
             </ul>
             {currentTheme.colors.length === 0 && (
-                <p>No colors.. start by adding one!</p>
+                <p>No colors... start by adding one!</p>
             )}
         </>
     );
