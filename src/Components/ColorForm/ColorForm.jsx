@@ -54,7 +54,7 @@ export default function ColorForm({
                     className="color-form__button color-form__button--save"
                     type="submit"
                 >
-                    {initialColor ? "Save" : "Add"}
+                    {initialColor ? "Save" : "Add Color"}
                 </button>
                 {initialColor && (
                     <button

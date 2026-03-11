@@ -72,13 +72,13 @@ function App() {
                             defaultValue={currentTheme.name}
                         ></input>
                         <button className="app__button" type="submit">
-                            Update
+                            Save
                         </button>
                         <button
                             className="app__button theme__button--cancel"
                             onClick={() => setShowEditMode(false)}
                         >
-                            Cancel
+                            Discard
                         </button>
                     </form>
                 </>
@@ -115,7 +115,7 @@ function App() {
                         ))}
                     </select>
                     <button className="app__button" onClick={handleAddTheme}>
-                        Add
+                        Add Theme
                     </button>
                     {!currentTheme.default && (
                         <>
@@ -123,13 +123,13 @@ function App() {
                                 className="app__button"
                                 onClick={() => setShowEditMode(true)}
                             >
-                                Edit
+                                Edit Theme
                             </button>
                             <button
                                 className="app__button"
                                 onClick={() => setShowConfirmation(true)}
                             >
-                                Delete
+                                Delete Theme
                             </button>
                         </>
                     )}
