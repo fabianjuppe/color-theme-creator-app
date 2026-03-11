@@ -51,4 +51,5 @@ body {
 .app__button:hover,
 .app__select:hover {
     border-radius: 0;
+    cursor: pointer;
 }
