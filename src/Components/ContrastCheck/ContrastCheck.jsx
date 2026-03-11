@@ -22,8 +22,10 @@ export default function ContrastCheck({ color, contrast }) {
     postFetch();
 
     return (
-        <p className={`contrast-score contrast-score--${score}`}>
-            Contrast Score: {score}
-        </p>
+        score && (
+            <p className={`contrast-score contrast-score--${score}`}>
+                Contrast Score: {score}
+            </p>
+        )
     );
 }
