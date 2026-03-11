@@ -2,3 +2,43 @@
     display: flex;
     display: row;
 }
+
+.color-input__text {
+    height: 50px;
+    width: 240px;
+    border: none;
+    padding: 0px 20px;
+    margin-right: 10px;
+    border-radius: 20px;
+    transition: border-radius 0.2s;
+}
+
+.color-input__color {
+    height: 50px;
+    width: 50px;
+    border-radius: 20px;
+    border: solid;
+    border-color: #ffffff;
+    font-size: 30px;
+    padding: 0;
+    cursor: pointer;
+    transition: border-radius 0.2s;
+}
+
+input[type="color"]::-moz-color-swatch {
+    border: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+}
+
+.color-input__text:hover,
+.color-input__color:hover {
+    border-radius: 0px;
+}

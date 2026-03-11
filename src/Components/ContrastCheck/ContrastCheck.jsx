@@ -23,7 +23,7 @@ export default function ContrastCheck({ color, contrast }) {
 
     return (
         <p className={`contrast-score contrast-score--${score}`}>
-            Overall Contrast Score: {score}
+            Contrast Score: {score}
         </p>
     );
 }

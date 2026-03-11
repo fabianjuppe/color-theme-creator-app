@@ -2,7 +2,11 @@ import { nanoid } from "nanoid";
 import ColorInput from "../ColorInput/ColorInput";
 import "./ColorForm.css";
 
-export default function ColorForm({ onSubmitColor, initialColor }) {
+export default function ColorForm({
+    onSubmitColor,
+    setShowEditMode,
+    initialColor,
+}) {
     function handleSubmit(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
@@ -24,10 +28,14 @@ export default function ColorForm({ onSubmitColor, initialColor }) {
             onSubmit={handleSubmit}
             style={{
                 color: initialColor ? initialColor.contrastText : "#000000",
+                backgroundColor: initialColor ? "" : "#d3d3d3",
             }}
         >
+            <label htmlFor="hex">Hex</label>
+            <ColorInput id="hex" hex={initialColor?.hex || "#2edb53"} />
             <label htmlFor="role">Role</label>
             <input
+                className="color-form__input"
                 id="role"
                 type="text"
                 name="role"
@@ -35,16 +43,28 @@ export default function ColorForm({ onSubmitColor, initialColor }) {
                 defaultValue={initialColor?.role || ""}
                 required
             />
-            <label htmlFor="hex">Hex</label>
-            <ColorInput id="hex" hex={initialColor?.hex || "#123456"} />
+
             <label htmlFor="contrastText">Contrast Text</label>
             <ColorInput
                 id="contrastText"
                 hex={initialColor?.contrastText || "#ffffff"}
             />
-            <button type="submit">
-                {initialColor ? "UPDATE COLOR" : "ADD COLOR"}
-            </button>
+            <div>
+                <button
+                    className="color-form__button color-form__button--save"
+                    type="submit"
+                >
+                    {initialColor ? "Save" : "Add"}
+                </button>
+                {initialColor && (
+                    <button
+                        className="color-form__button color-form__button--discard"
+                        onClick={() => setShowEditMode(false)}
+                    >
+                        Discard
+                    </button>
+                )}
+            </div>
         </form>
     );
 }

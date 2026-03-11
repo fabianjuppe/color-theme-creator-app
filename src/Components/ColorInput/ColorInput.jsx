@@ -11,6 +11,7 @@ export default function ColorInput({ id, hex }) {
     return (
         <div className="color-input">
             <input
+                className="color-input__text"
                 id={id}
                 type="text"
                 name={id}
@@ -18,6 +19,7 @@ export default function ColorInput({ id, hex }) {
                 onChange={handleInput}
             />
             <input
+                className="color-input__color"
                 id={`color-${id}`}
                 type="color"
                 name={`color-${id}`}

@@ -3,8 +3,53 @@ body {
     padding: 10px;
 }
 
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.app__select {
+    font-weight: bold;
+    height: 50px;
+    width: 340px;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 0 10px 10px 0;
+    border: none;
+    transition: border-radius 0.2s;
+    background-color: #d3d3d3;
+    color: #000000;
+}
+
+.app__input {
+    height: 50px;
+    border-radius: 20px;
+    width: 340px;
+    padding: 0px 20px;
+    margin: 0 10px 10px 0;
+    border: solid;
+    transition: border-radius 0.2s;
+}
+
+.app__input:hover {
+    border-radius: 0px;
+}
+
+.app__button {
+    height: 50px;
+    width: 145px;
+    border-radius: 20px;
+    border: none;
+    padding: 0px 50px;
+    margin: 0 10px 10px 0;
+    font-weight: bold;
+    transition: border-radius 0.2s;
+    color: #ffffff;
+    background-color: #000000;
+}
+
+.app__button--cancel {
+    color: #000000;
+    background-color: #ffffff;
+    border: solid;
+}
+
+.app__button:hover,
+.app__select:hover {
+    border-radius: 0;
 }

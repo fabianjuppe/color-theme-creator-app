@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./CopyToClipboard.css";
 
-export default function CopyToClipboard({ hex }) {
+export default function CopyToClipboard({ color, contrast }) {
     const [wasCopied, setWasCopied] = useState(false);
 
     async function handleCopyToClipboard() {
-        await navigator.clipboard.writeText(hex);
+        await navigator.clipboard.writeText(color);
         setWasCopied(true);
     }
 
@@ -20,8 +20,17 @@ export default function CopyToClipboard({ hex }) {
     }, [wasCopied]);
 
     return (
-        <button onClick={handleCopyToClipboard}>
-            {wasCopied ? "SUCCESFULLY COPIED!" : "COPY"}
-        </button>
+        <>
+            <button
+                className="copy__button"
+                style={{ color: contrast }}
+                onClick={handleCopyToClipboard}
+            >
+                {color.toUpperCase()}
+                <span className="copy__feedback">
+                    {wasCopied ? "Copied!" : "Copy!"}
+                </span>
+            </button>
+        </>
     );
 }
