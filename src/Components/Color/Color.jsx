@@ -26,7 +26,7 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
                 <>
                     <button
                         className="color-card__button color-card__button--delete"
-                        onClick={() => onDeleteColor?.(color)}
+                        onClick={() => onDeleteColor(color)}
                     >
                         Delete
                     </button>
