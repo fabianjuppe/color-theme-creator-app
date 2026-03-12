@@ -64,7 +64,7 @@ export default function Color({ color, onDeleteColor, onEditColor }) {
                     </button>
                     <button
                         className="color-card__icon color-card__icon--edit"
-                        onClick={() => setShowEditMode(!showEditMode)}
+                        onClick={() => setShowEditMode(true)}
                     >
                         <Pencil size={25} color={color.contrastText} />
                     </button>
